@@ -11,9 +11,10 @@ function App() {
   }
 
   const addTodo = () => {
+    if (text.trim() === '') return
     const newTodo : Todo = {
       id : crypto.randomUUID(),
-      text : text
+      text
     }
     setTodos(prev=>[...prev, newTodo])
     setText('')
@@ -25,11 +26,19 @@ function App() {
 
   return (
     <>
-      <input type="text" value={text} onChange={handleChange}  onKeyDown={(e) => e.key === 'Enter' && addTodo()}></input>
+      <input
+        type="text"
+        value={text}
+        onChange={handleChange}
+        onKeyDown={(e) => e.key === 'Enter' && addTodo()}
+      />
       <button onClick={addTodo}>追加</button>
       <ul>
         {todos.map(todo=>(
-          <li key={todo.id}>{todo.text}<button onClick={()=>deleteTodo(todo.id)}>削除</button></li>
+          <li key={todo.id}>
+            {todo.text}
+            <button onClick={()=>deleteTodo(todo.id)}>削除</button>
+          </li>
         ))}
       </ul>
     </>
